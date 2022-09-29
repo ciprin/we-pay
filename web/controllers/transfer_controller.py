@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 
-from web.services import transfer_service
+from services import transfer_service
 
 app = Flask(__name__)
 
@@ -14,15 +14,12 @@ def hello_world():
 def initiate_transfer():
     data = request.json
     from_iban, to_iban, amount = data['from_iban'], data['to_iban'], data['amount']
-    assert isinstance(from_iban, str)
-    assert isinstance(to_iban, str)
-    assert isinstance(amount, str)
-    amount = int(amount)
+    amount = amount if isinstance(amount, int) else int(amount)
 
     transfer_service.initiate_transfer(from_iban, to_iban, amount)
 
     return jsonify(dict(result=f'Transfer initiated from IBAN {from_iban} to IBAN {to_iban} for amount: {amount}'))
 
 
-# if __name__ == '__main__':
-#     app.run()
+if __name__ == '__main__':
+    app.run()
