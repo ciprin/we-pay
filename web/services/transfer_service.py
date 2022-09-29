@@ -45,12 +45,12 @@ def initiate_half_transaction(iban, amount, type):
 
 def initiate_transfer_background(from_iban, to_iban, amount):
     global event_id
-    add_initial_money_just_for_testing = initiate_half_transaction(from_iban, amount + 111, type='payin')
-    pay_in = initiate_half_transaction(to_iban, amount + 100, type='payin')
+    add_initial_money_just_for_testing = initiate_half_transaction(from_iban, amount*2, type='payin')
+    pay_in = initiate_half_transaction(to_iban, amount, type='payin')
     if pay_in:
-        pay_out = initiate_half_transaction(from_iban, 999, type='payout')
+        pay_out = initiate_half_transaction(from_iban, amount, type='payout')
         if not pay_out:
-            rollback = initiate_half_transaction(to_iban, 888, type='payout')
+            rollback = initiate_half_transaction(to_iban, amount, type='payout')
             if rollback:
                 return jsonify(dict(result='Transaction rolled back.'))
         return jsonify(dict(result='success'))
