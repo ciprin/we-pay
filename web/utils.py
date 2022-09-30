@@ -1,7 +1,6 @@
 import random
 import time
 
-from web.rest import determine_events
 from web.constants import BACKOFF_IN_SECONDS
 
 
@@ -14,6 +13,7 @@ def exponential_wait_considering_attempts_extra(attempt):
 
 
 def determine_initial_event_id(estimate):
+    from rest import determine_events
     while len(determine_events(estimate)) > 0:
         estimate = estimate*2
     else:

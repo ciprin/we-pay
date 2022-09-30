@@ -3,7 +3,7 @@ import random
 
 import requests
 
-from web.utils import exponential_wait_considering_attempts_extra, exponential_wait_considering_attempts
+from utils import exponential_wait_considering_attempts_extra, exponential_wait_considering_attempts
 from web.mappings import create_wallet_mapping, perform_settlement_mapping
 from web.mappings import get_events_mapping
 
